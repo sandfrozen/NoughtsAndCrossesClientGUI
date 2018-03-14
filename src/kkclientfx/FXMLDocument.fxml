@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="366.0" prefWidth="417.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kkclientfx.FXMLDocumentController">
+    <children>
+        <Button fx:id="buttonConnect" layoutX="318.0" layoutY="9.0" onAction="#readyOnAction" prefHeight="27.0" prefWidth="89.0" text="Gotowy" />
+      <TextField fx:id="nameTextField" layoutX="101.0" layoutY="9.0" prefHeight="27.0" prefWidth="209.0" promptText="Wpisz imie i kliknij Gotowy" />
+      <Text fx:id="infoText" layoutX="14.0" layoutY="63.0" stroke="#eb4a4a" strokeType="OUTSIDE" strokeWidth="0.0" text="brak połączenia z serwerem" wrappingWidth="296.0" />
+      <Button layoutX="318.0" layoutY="45.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#disconnectOnAction" prefHeight="27.0" prefWidth="89.0" text="Zakończ" />
+      <Accordion layoutX="172.0" layoutY="109.0" />
+      <Button layoutX="318.0" layoutY="82.0" mnemonicParsing="false" onAction="#connectOnAction" prefHeight="27.0" prefWidth="89.0" text="Połącz" />
+      <Button fx:id="b7" layoutX="101.0" layoutY="283.0" mnemonicParsing="false" onAction="#fieldPressedOnAction" prefHeight="69.0" prefWidth="69.0" text="?" />
+      <Button fx:id="b8" layoutX="171.0" layoutY="283.0" mnemonicParsing="false" onAction="#fieldPressedOnAction" prefHeight="69.0" prefWidth="69.0" text="?" />
+      <Button fx:id="b9" layoutX="241.0" layoutY="283.0" mnemonicParsing="false" onAction="#fieldPressedOnAction" prefHeight="69.0" prefWidth="69.0" text="?" />
+      <Button fx:id="b5" layoutX="171.0" layoutY="213.0" mnemonicParsing="false" onAction="#fieldPressedOnAction" prefHeight="69.0" prefWidth="69.0" text="?" />
+      <Button fx:id="b4" layoutX="101.0" layoutY="213.0" mnemonicParsing="false" onAction="#fieldPressedOnAction" prefHeight="69.0" prefWidth="69.0" text="?" />
+      <Button fx:id="b6" layoutX="241.0" layoutY="213.0" mnemonicParsing="false" onAction="#fieldPressedOnAction" prefHeight="69.0" prefWidth="69.0" text="?" />
+      <Button fx:id="b2" layoutX="171.0" layoutY="143.0" mnemonicParsing="false" onAction="#fieldPressedOnAction" prefHeight="69.0" prefWidth="69.0" text="?" />
+      <Button fx:id="b1" layoutX="101.0" layoutY="143.0" mnemonicParsing="false" onAction="#fieldPressedOnAction" prefHeight="69.0" prefWidth="69.0" text="?" />
+      <Button fx:id="b3" layoutX="241.0" layoutY="143.0" mnemonicParsing="false" onAction="#fieldPressedOnAction" prefHeight="69.0" prefWidth="69.0" text="?" />
+      <Label layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="80.0" text="Nick:" />
+      <Label alignment="CENTER" layoutX="127.0" layoutY="82.0" prefHeight="28.0" prefWidth="164.0" text="Kółko i krzyżyk" textAlignment="CENTER">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <Label fx:id="gameInfoLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="15.0" layoutY="119.0" prefHeight="17.0" prefWidth="388.0" text="-" textAlignment="CENTER" />
+    </children>
+</AnchorPane>
