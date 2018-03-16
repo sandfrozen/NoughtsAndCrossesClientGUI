@@ -18,7 +18,7 @@ public interface PlayerInterface extends Remote, Observator {
     public String getName() throws RemoteException;
     public void setSymbol(String s) throws RemoteException;
     public String getSymbol() throws RemoteException;
-    public void informWinner(String msg) throws RemoteException;
     public void setMyTurn(boolean b) throws RemoteException;
+    public void printGameInfo(String info) throws RemoteException;
             
 }

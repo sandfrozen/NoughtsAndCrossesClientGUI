@@ -35,18 +35,17 @@ import javafx.scene.text.Text;
  *
  * @author tomek.buslowski
  */
-
 // This class implements PlayerInterface = This is my PLAYER
 public class FXMLDocumentController extends UnicastRemoteObject implements Initializable, PlayerInterface {
-    
-    int i=0;
+
+    int i = 0;
     private boolean myTurn = false;
     private String name;
     private String symbol = "brak";
     private GameInterface game;
     private boolean isInGame = false;
-    private List<Button> field = new ArrayList<>();
-    
+    private List<Button> fieldsButtons = new ArrayList<>();
+
     @FXML
     private Button b1;
     @FXML
@@ -71,20 +70,21 @@ public class FXMLDocumentController extends UnicastRemoteObject implements Initi
     private Label gameInfoLabel;
     @FXML
     private Text infoText;
-    
-    public FXMLDocumentController() throws RemoteException { }
-    
+
+    public FXMLDocumentController() throws RemoteException {
+    }
+
     private void ready() {
-        if( game==null ) {
+        if (game == null) {
             infoText.setText("Brak połączenia z serwerem. Kliknij Połącz.");
             return;
         }
         try {
             setName(nameTextField.getText());
             setSymbol(game.getFreeSymbol());
-            
+
             isInGame = game.addPlayer(this);
-            if( !isInGame ) {
+            if (!isInGame) {
                 infoText.setText("Za dużo graczy.");
                 System.out.println("Za dużo graczy.");
                 setSymbol("brak");
@@ -93,14 +93,14 @@ public class FXMLDocumentController extends UnicastRemoteObject implements Initi
             infoText.setText("Podłączono do gry. Twój znak to: " + this.getSymbol());
             gameInfoLabel.setText(game.getGameInfo());
             System.out.println("Podłączono do gry: " + this.getName());
-            
+
         } catch (RemoteException ex) {
             infoText.setText("Wystąpił wyjątek podczas łączenia z serwerem.");
             System.out.println("Wystąpił wyjątek podczas łączenia z serwerem.");
             ex.printStackTrace();
         }
     }
-    
+
     public void setGameInfo() throws RemoteException {
         Platform.runLater(() -> {
             try {
@@ -110,10 +110,10 @@ public class FXMLDocumentController extends UnicastRemoteObject implements Initi
             }
         });
     }
-    
+
     @FXML
     private void readyOnAction() {
-        if( isInGame ){
+        if (isInGame) {
             try {
                 infoText.setText("Gra już o Tobie wie. Twój znak to: " + this.getSymbol());
             } catch (RemoteException ex) {
@@ -121,21 +121,21 @@ public class FXMLDocumentController extends UnicastRemoteObject implements Initi
             }
             return;
         }
-        if( nameTextField.getText().length() == 0 ) {
+        if (nameTextField.getText().length() == 0) {
             infoText.setText("Wpisz imie i kliknij Gotowy");
             return;
         }
         ready();
     }
-    
+
     @FXML
     private void connectOnAction() {
         connect();
     }
-    
+
     @FXML
     private void disconnectOnAction() {
-        if( !isInGame ) {
+        if (!isInGame) {
             infoText.setText("Gracz nie jest podłączony do gry.");
             resetField();
             return;
@@ -147,112 +147,112 @@ public class FXMLDocumentController extends UnicastRemoteObject implements Initi
             infoText.setText("Odłączono z gry.");
             gameInfoLabel.setText("-");
             resetField();
-            
+
         } catch (RemoteException ex) {
+            ex.printStackTrace();
             infoText.setText("Wyjątek podczas odłączania z gry.");
             System.out.println("Wyjątek podczas odłączania z gry.");
         }
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         connect();
-        field.add(b1);
-        field.add(b2);
-        field.add(b3);
-        field.add(b4);
-        field.add(b5);
-        field.add(b6);
-        field.add(b7);
-        field.add(b8);
-        field.add(b9);
+        fieldsButtons.add(b1);
+        fieldsButtons.add(b2);
+        fieldsButtons.add(b3);
+        fieldsButtons.add(b4);
+        fieldsButtons.add(b5);
+        fieldsButtons.add(b6);
+        fieldsButtons.add(b7);
+        fieldsButtons.add(b8);
+        fieldsButtons.add(b9);
     }
 
     public void connect() {
-        if( game!=null ) {
+        if (game != null) {
             infoText.setText("Połączenie z serwerem działa.");
             return;
         }
         infoText.setText("Łączenie....");
         // Odpalam w drugim wątku
-        
+
         Task task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
                 try {
                     game = (GameInterface) Naming.lookup("rmi://localhost/Game");
-                } catch(MalformedURLException | NotBoundException | RemoteException e) {
+                } catch (MalformedURLException | NotBoundException | RemoteException e) {
                     infoText.setText("Nie połączono z serwerem. " + i++);
-                    
+
                     //e.printStackTrace();
                 }
-                if( game!=null ) infoText.setText("Połączono z serwerem.");
+                if (game != null) {
+                    infoText.setText("Połączono z serwerem.");
+                }
                 return null;
             }
         };
-        synchronized(this){
+        synchronized (this) {
             new Thread(task).start();
         }
     }
-    
+
     @Override
     public void setName(String n) throws RemoteException {
         name = n;
     }
-    
+
     @Override
     public String getName() throws RemoteException {
         return name;
     }
-    
+
     @Override
     public void setSymbol(String s) throws RemoteException {
         symbol = s;
     }
-    
+
     @Override
     public String getSymbol() throws RemoteException {
         return symbol;
     }
-    
+
     public void updateField() throws RemoteException {
-        String[] f = game.getField();
+        String[] fields = game.getFields();
         Platform.runLater(() -> {
-            int i=0;
-            for(Button b : field) {
-                b.setText(f[i++]);
+            int j = 0;
+            for (Button b : fieldsButtons) {
+                b.setText(fields[j++]);
             }
         });
     }
-    
+
     public void resetField() {
         Platform.runLater(() -> {
-            for(Button b : field) {
+            for (Button b : fieldsButtons) {
                 b.setText("?");
             }
         });
     }
-    
+
     @FXML
     private void fieldPressedOnAction(ActionEvent e) throws RemoteException {
-        if( myTurn ) {
-            String index = ((Button)e.getSource()).getId();
-            int buttonNumber = (int)index.charAt(1) - 48;
-            
-            game.setField( buttonNumber );
+        if (myTurn) {
+            String index = ((Button) e.getSource()).getId();
+            int buttonNumber = (int) index.charAt(1) - 48;
+            game.setField(buttonNumber - 1);
         }
     }
 
     @Override
     public void update() throws RemoteException {
-        if( game.WAITING() ) {
+        if (game.WAITING()) {
             setGameInfo();
             resetField();
-        }
-        
-        else if( game.PLAYING() ) {
+        } else if (game.PLAYING()) {
             updateField();
-            if( game.getActualPlayer().hashCode() == this.hashCode() ) {
+            if (game.getActualPlayer().hashCode() == this.hashCode()) {
                 myTurn = true;
                 Platform.runLater(() -> {
                     gameInfoLabel.setText("Twój ruch");
@@ -267,15 +267,15 @@ public class FXMLDocumentController extends UnicastRemoteObject implements Initi
     }
 
     @Override
-    public void informWinner(String msg) throws RemoteException {
+    public void printGameInfo(String info) throws RemoteException {
         Platform.runLater(() -> {
-            gameInfoLabel.setText(msg);
+            gameInfoLabel.setText(info);
         });
     }
-    
+
     @Override
     public void setMyTurn(boolean b) throws RemoteException {
         myTurn = b;
     }
-    
+
 }

@@ -23,7 +23,7 @@ public interface GameInterface extends Remote, Observer {
     public boolean PLAYING() throws RemoteException;
     
     public PlayerInterface getActualPlayer() throws RemoteException;
-    public String[] getField() throws RemoteException;
+    public String[] getFields() throws RemoteException;
     public void setField(int i) throws RemoteException;
     public void setNextPlayer() throws RemoteException;
     
