@@ -146,6 +146,7 @@ public class FXMLDocumentController extends UnicastRemoteObject implements Initi
             System.out.println("Odłączono z gry.");
             infoText.setText("Odłączono z gry.");
             gameInfoLabel.setText("-");
+            resetField();
             
         } catch (RemoteException ex) {
             infoText.setText("Wyjątek podczas odłączania z gry.");
