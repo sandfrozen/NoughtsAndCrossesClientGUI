@@ -181,7 +181,7 @@ public class FXMLDocumentController extends UnicastRemoteObject implements Initi
             @Override
             protected Void call() throws Exception {
                 try {
-                    game = (GameInterface) Naming.lookup("rmi://localhost/Game");
+                    game = (GameInterface) Naming.lookup("//localhost/Game");
                 } catch (MalformedURLException | NotBoundException | RemoteException e) {
                     infoText.setText("Nie połączono z serwerem. " + i++);
 
